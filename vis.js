@@ -3,9 +3,9 @@
   var data,
     circle, 
     svg, 
-    width, 
-    height, 
-    arr = [];
+    arr = [], 
+    years = [], 
+    processedData = [];
 
   d3.csv("pop.csv", function(error, json) {
     if (error) console.log("error");
@@ -13,9 +13,19 @@
     init();
   });
 
-
-
   function init() {
+
+    for(var k = 0; k < data.length; k++ ) {
+      var inner = [];
+      inner.push(parseInt(data[k].Year));
+      inner.push(parseInt(data[k].UK));
+      processedData.push(inner);
+    }
+
+    // processed data - to build into a function 
+    // console.log(arr);
+    // console.log(processedData[0][1]);
+
     svg = d3.selectAll("#vis")
       .append("svg")
       .attr({
@@ -27,36 +37,44 @@
         }
       });
 
+    arr.push(data[0].UK);
+
+    for(var i = 0; i < data.length; i++) {
+      years.push(data[i].Year);
+    }
+
     circle = svg.selectAll("#vis circle")
-      .data([50])
+      .data(arr)
       .enter()
       .append("circle")
       .attr({
         "cx" : 100, // fix later
         "cy" : 100, 
-        "r" : 40, 
+        "r" : function(d) {
+          return d / 1000000;
+        }, 
         "fill" : "#efefef"
       });
 
-    // for(var prop in data) {
-    //   if(data.hasOwnProperty(prop)) {
-    //     // arr.push(data[prop].Year);
-    //     console.log(prop.length);
-    //   }
-    // }
-
-    // console.log(arr);
+    initialiseSlider(processedData[0][0],processedData[processedData.length - 1][0]);
   }
 
-  $( "#slider" ).slider({
-    value:100,
-    min: 0,
-    max: 500,
-    step: 1,
-    slide: function( event, ui ) {
-      $( "#amount" ).val( "$" + ui.value );
-    }
-  });
-  $( "#amount" ).val( "$" + $( "#slider" ).slider( "value" ) );
+
+  function initialiseSlider(start, end) {
+
+    $("#slider").slider({
+      value:start,
+      min: start,
+      max: end,
+      step: 1,
+      slide: function(event, ui) {
+        $("#year").val(ui.value);
+        console.log(ui.value);
+      }
+    });
+  
+  }
+
+
 
 })();
