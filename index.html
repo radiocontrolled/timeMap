@@ -2,18 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Grow population by year</title>
+    <title>World population</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="style.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   </head>
   <body>
+    <h1>World population</h1>
+    <p>The circle is a single SVG element that represents the population every 10 years</p>
     <div id="vis">
     </div>
-    <p>
-      <label for="year">Year:</label>
-      <input type="text" id="year" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    </p>
+    <label for="pop">Population:</label>
+    <input type="text" id="population" readonly value="50592900"> 
+    <br/>
+    <label for="year">Year:</label>
+    <input type="text" id="year" readonly value="1953">  
     <div id="slider"></div>
   <script src="bower_components/d3/d3.min.js"></script>
   <script src="vis.js"></script> 

@@ -27,7 +27,7 @@
          return $(window).width() * 0.5; 
       },
         "height": function() {
-        return $(window).height() * 0.5;
+        return $(window).height() * 0.35;
       }
     });
 
@@ -44,9 +44,8 @@
         "r" : function(d, i) {
           return temp / 1000000;
         }, 
-        "fill" : "#efefef"
-      }
-    );
+        "fill" : "#8e44ad"
+      });
 
     initialiseSlider(processedData[0][0],processedData[processedData.length - 1][0]);
   
@@ -65,7 +64,6 @@
 
 
   function update(year) {
-
     var temp = [];
 
     for(var i = 0; i < processedData.length; i++) {
@@ -76,6 +74,9 @@
 
     circle = svg.selectAll("circle")
       .data(temp)
+      .transition()
+      .duration(300)
+      .delay(100)
       .attr({
         "r" : function(d, i) {
           return temp / 1000000;
@@ -83,17 +84,22 @@
       }
     );
 
+    $("#population").val(temp[0]);
   }
 
   function initialiseSlider(start, end) {
     $("#slider").slider({
-      value:start,
-      min: start,
+      value:1953,
+      min: 1953,
       max: end,
-      step: 1,
+      step: 10,
       slide: function(event, ui) {
         $("#year").val(ui.value);
+        $("#population").val(ui.value);
         update(ui.value);
+      },
+      create: function(event, ui){
+        $(this).slider('value',$(this).parent().find("#year").val());
       }
     });
   }
