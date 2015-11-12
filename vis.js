@@ -61,7 +61,6 @@
 
 
   function initialiseSlider(start, end) {
-
     $("#slider").slider({
       value:start,
       min: start,
@@ -72,7 +71,6 @@
         console.log(ui.value);
       }
     });
-  
   }
 
 
